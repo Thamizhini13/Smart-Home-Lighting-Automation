@@ -1,0 +1,75 @@
+"""
+CodeAlpha Internship
+Task 3: Smart Home Lighting Automation
+
+Automatically controls lighting based on motion
+and room brightness.
+"""
+
+def get_yes_no(prompt):
+    while True:
+        answer = input(prompt).strip().lower()
+
+        if answer in ("yes", "y"):
+            return True
+        elif answer in ("no", "n"):
+            return False
+        else:
+            print("Please enter yes or no.")
+
+
+def run_smart_lighting():
+    print("=" * 45)
+    print(" SMART HOME LIGHTING AUTOMATION")
+    print("=" * 45)
+
+    while True:
+        print("\nEnter room conditions:")
+
+        motion = get_yes_no(
+            "Is motion detected? (yes/no): "
+        )
+
+        dark = get_yes_no(
+            "Is the room dark? (yes/no): "
+        )
+
+        manual_override = get_yes_no(
+            "Use manual override? (yes/no): "
+        )
+
+        if manual_override:
+            manual_choice = get_yes_no(
+                "Turn the light ON manually? (yes/no): "
+            )
+
+            light_on = manual_choice
+            reason = "Manual override selected."
+
+        else:
+            light_on = motion and dark
+
+            if light_on:
+                reason = "Motion detected and room is dark."
+            elif not motion:
+                reason = "No motion detected."
+            else:
+                reason = "Room is bright enough."
+
+        print("\n--- SYSTEM STATUS ---")
+        print("Motion detected :", "YES" if motion else "NO")
+        print("Room is dark    :", "YES" if dark else "NO")
+        print("Light status    :", "ON" if light_on else "OFF")
+        print("Reason          :", reason)
+
+        again = get_yes_no(
+            "\nTest again? (yes/no): "
+        )
+
+        if not again:
+            print("\nSimulation completed!")
+            break
+
+
+if __name__ == "__main__":
+    run_smart_lighting()
